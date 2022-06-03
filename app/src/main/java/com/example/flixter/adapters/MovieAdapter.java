@@ -94,22 +94,25 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             tvOverview.setMovementMethod(new ScrollingMovementMethod());
 
             String imageUrl;
+            int placeholder;
 
             // if phone is in landscape
             if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
                 // use background image
                 imageUrl = movie.getBackdropPath();
+                placeholder =  R.drawable.flicks_backdrop_placeholder;
             }
             else {
                 // use poster image
                 imageUrl = movie.getPosterPath();
+                placeholder = R.drawable.flicks_movie_placeholder;
             }
 
             int radius = 30; // corner radius, higher value = more rounded
 
             Glide.with(context)
                     .load(imageUrl)
-                    .placeholder(R.drawable.flicks_movie_placeholder)
+                    .placeholder(placeholder)
                     .centerCrop() // scale image to fill the entire ImageView
                     .transform(new RoundedCorners(radius))
                     .into(ivPoster);
