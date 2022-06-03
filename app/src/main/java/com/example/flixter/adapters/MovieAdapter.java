@@ -3,6 +3,7 @@ package com.example.flixter.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.flixter.MovieDetailsActivity;
 import com.example.flixter.R;
 import com.example.flixter.models.Movie;
@@ -89,6 +91,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         public void bind(Movie movie){
             tvTitle.setText(movie.getTitle());
             tvOverview.setText(movie.getOverview());
+            tvOverview.setMovementMethod(new ScrollingMovementMethod());
+
             String imageUrl;
 
             // if phone is in landscape
@@ -101,9 +105,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 imageUrl = movie.getPosterPath();
             }
 
+            int radius = 30; // corner radius, higher value = more rounded
+
             Glide.with(context)
                     .load(imageUrl)
                     .placeholder(R.drawable.flicks_movie_placeholder)
+                    .centerCrop() // scale image to fill the entire ImageView
+                    .transform(new RoundedCorners(radius))
                     .into(ivPoster);
         }
     }
