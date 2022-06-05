@@ -19,12 +19,14 @@ The following **stretch** features are implemented:
 
 * [X] Improved the user interface by experimenting with styling and coloring.
 * [X] Apply rounded corners for the poster or background images using [Glide transformations](https://guides.codepath.org/android/Displaying-Images-with-the-Glide-Library#transformations)
-* [ ] Apply the popular [View Binding annotation library](http://guides.codepath.org/android/Reducing-View-Boilerplate-with-ViewBinding) to reduce boilerplate code.
+* [X] Apply the popular [View Binding annotation library](http://guides.codepath.org/android/Reducing-View-Boilerplate-with-ViewBinding) to reduce boilerplate code.
 * [ ] Allow video trailers to be played in full-screen using the YouTubePlayerView from the details screen.
 
 The following **additional** features are implemented:
 
 * [X] Scrolling
+* [X] Dark mode (background color, text color)
+* [X] Fonts
 
 ## Video Walkthrough
 
@@ -43,6 +45,7 @@ Solved
 
 In Progress
 1. Showing image on the Movie Details activity using Gradle - I tried creating a new class that extended GradleModule in order to show the image. However, I ran into mutliple issues and did not have time to complete this.
+2. Trying to figure out how to use ViewBinding for Adapters (for RecyclerView)
 
 ## Open-source libraries used
 
