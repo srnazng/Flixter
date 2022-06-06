@@ -1,5 +1,12 @@
 package com.example.flixter.models;
 
+import android.content.Intent;
+import android.util.Log;
+
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.flixter.MovieTrailerActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +15,8 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Headers;
+
 @Parcel
 public class Movie {
     String backdropPath;
@@ -15,6 +24,8 @@ public class Movie {
     String title;
     String overview;
     Double voteAverage;
+    Integer id;
+    String key;
 
     // no-arg, empty constructor required for Parceler
     public Movie() {}
@@ -25,6 +36,32 @@ public class Movie {
         title = jsonObject.getString("title");
         overview = jsonObject.getString("overview");
         voteAverage = jsonObject.getDouble("vote_average");
+        id = jsonObject.getInt("id");
+
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        String URL = "https://api.themoviedb.org/3/movie/" + id + "/videos?api_key=185ffab0bdb98ff53d68f91759243d65";
+        String TAG = "MainDetailsActivity";
+
+        client.get(URL, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try{
+                    JSONObject result = jsonObject.getJSONArray("results").getJSONObject(0);
+                    key = result.getString("key");
+                } catch (JSONException e){
+                    Log.e(TAG, "Hit json exception", e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "onFailure");
+            }
+        });
     }
 
     public static List<Movie> fromJsonArray(JSONArray movieJSONArray) throws JSONException{
@@ -51,7 +88,11 @@ public class Movie {
         return title;
     }
 
+    public Integer getId() { return id; }
+
     public String getOverview() {
         return overview;
     }
+
+    public String getKey(){ return key; }
 }
